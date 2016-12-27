@@ -1,12 +1,9 @@
-.col-md-2
-  = contact.first_name
-.col-md-2
-  = contact.last_name
-.col-md-2
-  = contact.address
-.col-md-2
-  = contact.mobile_phone
-.col-md-2
-  = contact.fixed_phone
-.col-md-2
-  = image_tag contact.image.url
+tr
+  td = contact.first_name
+  td = contact.last_name
+  td = contact.address
+  td = contact.mobile_phone
+  td = contact.fixed_phone
+  td = link_to 'Show', contact_path(contact)
+  td = link_to 'Edit', edit_contact_path(contact)
+  td = link_to 'Delete', contact_path(contact), method: :delete
