@@ -7,5 +7,7 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-    = render 'shared/navigation' if user_signed_in?
-    = yield
+    .container
+      = render 'shared/navigation' if user_signed_in?
+      = render 'shared/flash'
+      = yield

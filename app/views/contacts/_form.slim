@@ -1,0 +1,8 @@
+= simple_form_for @contact do |f|
+  = f.input :first_name
+  = f.input :last_name
+  = f.input :address
+  = f.input :fixed_phone
+  = f.input :mobile_phone
+  = f.input :image, as: :file
+  = f.submit
