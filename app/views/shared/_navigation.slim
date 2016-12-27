@@ -1,0 +1,6 @@
+nav.navbar-default
+  .container-fluid
+  .collapse.navbar-collapse
+    ul.nav.navbar-nav
+      li.active
+        = link_to "Sign out", destroy_user_session_path, method: :delete
