@@ -18,7 +18,7 @@ describe "Contacts spec" do
       expect(page).to have_link 'Delete', href: contact_path(first_contact)
       expect(page).to have_link 'Delete', href: contact_path(second_contact)
 
-      expect(page).to have_link 'New', href: new_contact_path
+      expect(page).to have_link 'New Contact', href: new_contact_path
     end
   end
 end
