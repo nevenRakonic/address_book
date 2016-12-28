@@ -1,6 +1,6 @@
 class ContactsController < ApplicationController
   before_action :authenticate_user!
-  before_action :get_contact, only: [:edit, :show, :destroy]
+  before_action :get_contact, only: [:edit, :show, :update, :destroy]
   def index
     @contacts = current_user.contacts
   end
@@ -25,6 +25,16 @@ class ContactsController < ApplicationController
     else
       @contact.contact_attributes.build unless @contact.contact_attributes.present?
       render :new
+    end
+  end
+
+  def update
+    if @contact.update(contact_params)
+      flash[:success] = "Contact succesfully updated"
+      redirect_to contacts_path
+    else
+      @contact.contact_attributes.build unless @contact.contact_attributes.present?
+      render :edit
     end
   end
 

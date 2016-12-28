@@ -41,16 +41,104 @@ RSpec.describe ContactsController, type: :controller do
     end
 
     describe '#create' do
-      context 'with valid params' do
-        subject { post :create, params: { contact: attributes_for(:contact) } }
+      context 'with valid params including 2 contact attributes' do
+        subject { post :create, params:
+          {
+            contact: attributes_for(:contact).merge!(
+            contact_attributes_attributes: {
+              "0" => attributes_for(:contact_attribute),
+              "1" => attributes_for(:contact_attribute)
+            }),
+          }
+        }
 
-        it 'redirects to index page' do
+        it 'redirects to contacts index' do
           subject
           expect(response).to redirect_to contacts_path
         end
 
         it 'creates new contact' do
           expect{ subject }.to change { Contact.count }.by(1)
+        end
+
+        it 'creates two new contact attributes' do
+          expect{ subject }.to change { ContactAttribute.count }.by(2)
+        end
+      end
+
+      context 'with invalid params' do
+        subject { post :create, params:
+          {
+            contact: { first_name: "" }
+          }
+        }
+
+        it 'returns 200 response' do
+          subject
+          expect(response.status).to eq 200
+        end
+
+        it 'does not create new contact' do
+          expect{ subject }.to_not change { Contact.count }
+        end
+
+        it 'does not create new contact attribute' do
+          expect{ subject }.to_not change { ContactAttribute.count }
+        end
+      end
+    end
+
+    describe '#update' do
+      context 'with valid params including 2 contact attributes' do
+        let!(:contact_attributes) { create_list(:contact_attribute, 2, contact: contact) }
+        subject { put :update, params:
+          {
+            id: contact.id,
+            contact: { first_name: "Updated Contact Name" }.merge!(
+            contact_attributes_attributes: {
+              "0" => { name: "Updated Attribute", content: "New Content", id: contact_attributes.first.id }
+            }),
+          }
+        }
+
+        it 'redirects to contacts index' do
+          subject
+          expect(response).to redirect_to contacts_path
+        end
+
+        it "updates the contact" do
+          subject
+          expect(contact.reload.first_name).to eq "Updated Contact Name"
+        end
+
+        it 'updates the correct contact attribute' do
+          subject
+          expect(contact_attributes.first.reload.name).to eq "Updated Attribute"
+          expect(contact_attributes.first.reload.content).to eq "New Content"
+          expect(contact_attributes.second.reload.name).to_not eq "Updated Attribute"
+        end
+      end
+
+      context 'with invalid params' do
+        subject { put :update, params:
+          {
+            id: contact.id,
+            contact: { first_name: "" }
+          }
+        }
+
+        it 'returns 200 response' do
+          subject
+          expect(response.status).to eq 200
+        end
+
+        it 'does not update contact' do
+          subject
+          expect(contact.reload.first_name).to eq contact.first_name
+        end
+
+        it 'does not create new contact attributes' do
+          expect{ subject }.to_not change { ContactAttribute.count }
         end
       end
     end
