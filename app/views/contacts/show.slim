@@ -1,0 +1,25 @@
+.col-md-12
+  = image_tag @contact.image.url
+table.table.table-striped
+  tbody
+    tr
+      td First Name:
+      td = @contact.first_name
+    tr
+      td Last Name:
+      td = @contact.last_name
+    tr
+      td Address:
+      td = @contact.address
+    tr
+      td Mobile Phone:
+      td = @contact.mobile_phone
+    tr
+      td Fixed Phone:
+      td = @contact.fixed_phone
+    - @contact.contact_attributes.each do |contact_attribute|
+      tr
+        td = contact_attribute.name
+        td = contact_attribute.content
+.col-md-12
+  = link_to 'Back', contacts_path

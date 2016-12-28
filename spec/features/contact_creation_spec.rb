@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe "Contact creation" do
   context "Signed in user" do
     let(:user) { create(:user) }

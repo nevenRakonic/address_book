@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe "Contacts spec" do
   context "User is signed in and two contacts belonging to them exist" do
     let(:user) { create(:user) }

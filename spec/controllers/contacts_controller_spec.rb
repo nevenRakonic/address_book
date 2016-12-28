@@ -89,14 +89,15 @@ RSpec.describe ContactsController, type: :controller do
     end
 
     describe '#update' do
-      context 'with valid params including 2 contact attributes' do
+      context 'with valid params including 2 contact attributes of which one has destroy param' do
         let!(:contact_attributes) { create_list(:contact_attribute, 2, contact: contact) }
         subject { put :update, params:
           {
             id: contact.id,
             contact: { first_name: "Updated Contact Name" }.merge!(
             contact_attributes_attributes: {
-              "0" => { name: "Updated Attribute", content: "New Content", id: contact_attributes.first.id }
+              "0" => { name: "Updated Attribute", content: "New Content", id: contact_attributes.first.id },
+              "1" => { id: contact_attributes.second.id, _destroy: "1" }
             }),
           }
         }
@@ -115,7 +116,10 @@ RSpec.describe ContactsController, type: :controller do
           subject
           expect(contact_attributes.first.reload.name).to eq "Updated Attribute"
           expect(contact_attributes.first.reload.content).to eq "New Content"
-          expect(contact_attributes.second.reload.name).to_not eq "Updated Attribute"
+        end
+
+        it 'deletes a contact attribute' do
+          expect{ subject }.to change { ContactAttribute.count }.by(-1)
         end
       end
 
