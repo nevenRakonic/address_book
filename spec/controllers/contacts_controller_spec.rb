@@ -38,6 +38,20 @@ RSpec.describe ContactsController, type: :controller do
         subject
         expect(response).to redirect_to contacts_path
       end
+
+      context "with other users contact params" do
+        let!(:other_user) { create(:user) }
+        let!(:other_contact) { create(:contact, user: other_user) }
+
+        subject { delete :destroy, params: {
+            id: other_contact.id
+          }
+        }
+
+        it 'raises an error' do
+          expect{ subject }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
     end
 
     describe '#create' do
@@ -144,6 +158,21 @@ RSpec.describe ContactsController, type: :controller do
         it 'does not create new contact attributes' do
           expect{ subject }.to_not change { ContactAttribute.count }
         end
+      end
+    end
+
+    context "with other users contact params" do
+      let!(:other_user) { create(:user) }
+      let!(:other_contact) { create(:contact, user: other_user) }
+
+      subject { put :update, params: {
+          id: other_contact.id,
+          contact: { first_name: "New Name" }
+        }
+      }
+
+      it 'raises an error' do
+        expect{ subject }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
