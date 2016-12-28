@@ -5,4 +5,8 @@
   = f.input :fixed_phone
   = f.input :mobile_phone
   = f.input :image, as: :file
+  = f.simple_fields_for :contact_attributes do |contact_attribute|
+    = render 'contact_attribute_fields', f: contact_attribute if contact_attribute.object.changed? || contact_attribute.object.persisted?
+  .links
+    = link_to_add_association 'Add Attribute', f, :contact_attributes
   = f.submit
