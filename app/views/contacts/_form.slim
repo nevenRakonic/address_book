@@ -23,4 +23,5 @@
       .links
         = link_to_add_association 'Add Attribute', f, :contact_attributes, class: 'btn btn-default top-spacer'
   hr
-  = f.submit "Create Contact", class: 'btn btn-primary'
+  = f.button :submit, class: 'btn btn-primary'
+  = link_to 'Back', contacts_path, class: 'pull-right'
