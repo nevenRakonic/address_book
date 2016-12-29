@@ -2,5 +2,8 @@ nav.navbar-default
   .container-fluid
   .collapse.navbar-collapse
     ul.nav.navbar-nav
-      li.active
+      li
+        = link_to "Contacts", contacts_path
+    ul.nav.navbar-nav.navbar-right
+      li
         = link_to "Sign out", destroy_user_session_path, method: :delete

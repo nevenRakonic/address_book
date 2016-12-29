@@ -1,3 +1,17 @@
 // Place all the styles related to the contacts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.img-space {
+  padding: 10px;
+}
+
+.top-spacer {
+  margin-top: 10px;
+}
+
+
+@media (min-width: $screen-md) {
+  .inline-button {
+    margin-top: 24px;
+  }
+}

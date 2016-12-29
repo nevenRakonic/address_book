@@ -1,4 +1,7 @@
-.nested-fields
-  = f.input :name
-  = f.input :content
-  = link_to_remove_association "Remove Attribute", f
+.nested-fields.row
+  .col-md-4
+    = f.input :name
+  .col-md-4
+    = f.input :content
+  .col-md-4
+    = link_to_remove_association "Remove Attribute", f, class: 'btn btn-default inline-button'

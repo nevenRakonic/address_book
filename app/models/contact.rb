@@ -4,6 +4,9 @@ class Contact < ApplicationRecord
   accepts_nested_attributes_for :contact_attributes, allow_destroy: true
 
   has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/missing/missing.png"
+
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   validates :first_name, :address, presence: true
+
+  paginates_per 20
 end

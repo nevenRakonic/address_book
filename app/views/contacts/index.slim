@@ -1,15 +1,21 @@
-table.table.table-striped
-  thead
-    tr
-      th First Name
-      th Last Name
-      th Address
-      th Mobile Phone
-      th Fixed Phone
-      th
-      th
-      th
-  tbody
-    = render @contacts
+h1 Contacts
+hr
+.table-responsive
+  table.table.table-striped
+    thead
+      tr
+        th First Name
+        th Last Name
+        th Address
+        th Mobile Phone
+        th Fixed Phone
+        th Actions
+        th
+        th
+    tbody
+      = render @contacts
 
-= link_to "New Contact", new_contact_path
+= link_to "New Contact", new_contact_path, class: 'btn btn-primary'
+br
+.text-center
+  = paginate @contacts

@@ -3,7 +3,7 @@ class ContactsController < ApplicationController
   before_action :get_contact, only: [:edit, :show, :update, :destroy]
 
   def index
-    @contacts = current_user.contacts
+    @contacts = current_user.contacts.page params[:page]
   end
 
   def show
